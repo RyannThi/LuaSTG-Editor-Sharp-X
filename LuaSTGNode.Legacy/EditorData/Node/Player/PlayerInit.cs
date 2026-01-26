@@ -56,8 +56,8 @@ namespace LuaSTGEditorSharp.EditorData.Node.Object
             {
                 parentName = Lua.StringParser.ParseLua(Parent.NonMacrolize(0));
             }
-            yield return sp + "" + parentName + ".init = function(self, slot)\n" +
-                s1 + "player_class.init(" + NonMacrolize(0) + ", slot)\n" +
+            yield return sp + "" + parentName + ".init = function(self)\n" +
+                s1 + "player_class.init(" + NonMacrolize(0) + ")\n" +
                 s1 + "self.name = \"" + Parent.NonMacrolize(0) +"\"\n";
             foreach (var a in base.ToLua(spacing + 1))
             {

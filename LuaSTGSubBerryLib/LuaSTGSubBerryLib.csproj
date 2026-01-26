@@ -65,6 +65,14 @@
       <Project>{bd1ca1e6-9e34-4098-ae65-922f23670f75}</Project>
       <Name>LuaSTGEditorSharp.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LuaSTGNode.Berry.Windows\LuaSTGNode.Berry.Windows.csproj">
+      <Project>{621d7cd9-6469-4579-82ed-df89776da880}</Project>
+      <Name>LuaSTGNode.Berry.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LuaSTGNode.Berry\LuaSTGNode.Berry.csproj">
+      <Project>{9967866d-5bcd-4222-8f37-1d05f2ae380b}</Project>
+      <Name>LuaSTGNode.Berry</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="LuaSTGSubBerryLib.dependencies">
