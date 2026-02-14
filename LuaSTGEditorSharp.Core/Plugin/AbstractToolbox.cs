@@ -60,6 +60,7 @@ namespace LuaSTGEditorSharp.Plugin
             gen.Add(new ToolboxItemData("comment", "/LuaSTGEditorSharp.Core;component/images/comment.png", "Comment"), new AddNode(AddCommentNode));
             gen.Add(new ToolboxItemData(true), null);
             gen.Add(new ToolboxItemData("if", "/LuaSTGEditorSharp.Core;component/images/if.png", "If"), new AddNode(AddIfNode));
+            gen.Add(new ToolboxItemData("else", "/LuaSTGEditorSharp.Core;component/images/else.png", "Else"), new AddNode(AddElseNode));
             gen.Add(new ToolboxItemData("elseif", "/LuaSTGEditorSharp.Core;component/images/elseif.png", "Else If"), new AddNode(AddElseIfNode));
             gen.Add(new ToolboxItemData("while", "/LuaSTGEditorSharp.Core;component/images/while.png", "While"), new AddNode(AddWhileNode));
             gen.Add(new ToolboxItemData("repeat", "/LuaSTGEditorSharp.Core;component/images/repeat.png", "Repeat"), new AddNode(AddRepeatNode));
@@ -231,6 +232,11 @@ namespace LuaSTGEditorSharp.Plugin
             newIf.AddChild(new IfThen(parent.ActivatedWorkSpaceData));
             newIf.AddChild(new IfElse(parent.ActivatedWorkSpaceData));
             parent.Insert(newIf);
+        }
+
+        private void AddElseNode()
+        {
+            parent.Insert(new IfElse(parent.ActivatedWorkSpaceData));
         }
 
         private void AddWhileNode()

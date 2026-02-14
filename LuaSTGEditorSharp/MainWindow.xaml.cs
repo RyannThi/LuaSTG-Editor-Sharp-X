@@ -115,7 +115,7 @@ namespace LuaSTGEditorSharp
             }
         }
 
-        public TreeView workSpace;
+        public TreeView workSpace { get; set; }
 
         private BackgroundWorker CompileWorker;
 

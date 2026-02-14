@@ -658,6 +658,7 @@
     <Resource Include="images\16x16\CustomInterpolationVariable.png" />
     <Resource Include="images\pcall.png" />
     <Resource Include="images\16x16\pcall.png" />
+    <Resource Include="images\else.png" />
     <Content Include="SplashScreen.png" />
   </ItemGroup>
   <ItemGroup>

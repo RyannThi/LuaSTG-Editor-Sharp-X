@@ -47,11 +47,11 @@ namespace LuaSTGEditorSharp.EditorData.Node
                 data.requireAncestor = null;
                 if (attrs.Count() != 0)
                 {
-                    data.requireAncestor = (from RequireAncestorAttribute at in attrs
-                                            select GetTypes(at.RequiredTypes)).ToArray();
+                    data.requireAncestor = [.. (from RequireAncestorAttribute at in attrs
+                                            select GetTypes(at.RequiredTypes))];
                 }
                 NodeTypeInfo.Add(t, data);
-                StandardNode.Add(t, t.GetConstructor(new Type[] { typeof(DocumentData) }).Invoke(new object[] { null }) as TreeNode);
+                StandardNode.Add(t, t.GetConstructor([typeof(DocumentData)]).Invoke([null]) as TreeNode);
             }
         }
 
@@ -65,7 +65,7 @@ namespace LuaSTGEditorSharp.EditorData.Node
                 {
                     if (it.IsAssignableFrom(t))
                     {
-                        ITypeEnumerable o = t.GetConstructor(Type.EmptyTypes).Invoke(new object[0]) as ITypeEnumerable;
+                        ITypeEnumerable o = t.GetConstructor(Type.EmptyTypes).Invoke([]) as ITypeEnumerable;
                         foreach (Type ty in o)
                         {
                             types.AddLast(ty);

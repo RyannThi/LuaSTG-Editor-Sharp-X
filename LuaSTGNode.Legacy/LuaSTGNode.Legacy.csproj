@@ -547,9 +547,6 @@
     <Resource Include="images\16x16\dropitem.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\16x16\else.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\16x16\enemycreate.png" />
   </ItemGroup>
   <ItemGroup>
@@ -1640,6 +1637,7 @@
     <Content Include="CustomNodes\Example.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="images\else.png" />
     <Resource Include="images\16x16\renderanim.png" />
     <Resource Include="images\renderanim.png" />
     <Resource Include="images\16x16\rendermodel3d.png" />

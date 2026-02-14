@@ -1,4 +1,4 @@
-﻿<SyntaxDefinition name="C#"
+﻿<SyntaxDefinition name="Lua"
         xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
   <Color name="Comment" foreground="Green" />
   <Color name="String" foreground="#FF808080"/>
