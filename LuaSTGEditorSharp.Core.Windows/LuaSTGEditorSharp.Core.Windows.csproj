@@ -72,6 +72,9 @@
       <DependentUpon>CodeInput.xaml</DependentUpon>
     </Compile>
     <Compile Include="Input\InputWindow.cs" />
+    <Compile Include="Input\MultiplePathInput.xaml.cs">
+      <DependentUpon>MultiplePathInput.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Input\NodeDefInput.xaml.cs">
       <DependentUpon>NodeDefInput.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Input\CodeInput.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Input\MultiplePathInput.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

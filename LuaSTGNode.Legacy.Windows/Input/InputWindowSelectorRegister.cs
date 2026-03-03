@@ -169,6 +169,7 @@ namespace LuaSTGEditorSharp.Windows.Input
             target.Add("lstgesFile", (src, tar) => new PathInput(tar, "LuaSTG Sharp File (*.lstges)|*.lstges", src));
             target.Add("modelFile", (src, tar) => new PathInput(tar, "GLTF Model file (*.gltf;*.glb)|*.gltf;*.glb", src));
             target.Add("plainFile", (src, tar) => new PathInput(tar, "File (*.*)|*.*", src));
+            target.Add("plainMultipleFiles", (src, tar) => new MultiplePathInput(tar, "File (*.*)|*.*", src));
             target.Add("SCName", (src, tar) => new Selector(tar
                 , InputWindowSelector.SelectComboBox("SCName"), "Input Spell Card Name"));
             target.Add("blend", (src, tar) => new Selector(tar
