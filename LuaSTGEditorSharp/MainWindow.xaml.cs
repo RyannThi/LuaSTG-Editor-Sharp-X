@@ -729,6 +729,27 @@ namespace LuaSTGEditorSharp
 
             App currentApp = Application.Current as App;
             CompileProcess process = null;
+
+            // Evil virtual doc
+            if (current is PlainDocumentData orphan && orphan.parentProj == null && orphan.parent != null)
+            {
+                foreach (DocumentData doc in orphan.parent)
+                {
+                    if (doc is ProjectData proj)
+                    {
+                        foreach (var idwm in proj.referencedDoc)
+                        {
+                            if (idwm.DocPath == orphan.DocPath)
+                            {
+                                orphan.parentProj = proj;
+                                break;
+                            }
+                        }
+                    }
+                    if (orphan.parentProj != null) break;
+                }
+            }
+
             if (!(current is PlainDocumentData pdd && pdd.parentProj != null))
             {
                 current.GatherCompileInfo(currentApp);

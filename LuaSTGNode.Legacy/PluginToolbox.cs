@@ -24,6 +24,7 @@ using System.Windows.Resources;
 using System.IO;
 using MoonSharp.Interpreter;
 using LuaSTGEditorSharp.CustomNodes;
+using LuaSTGEditorSharp.EditorData.Node.RichText;
 
 namespace LuaSTGEditorSharp
 {
@@ -178,6 +179,8 @@ namespace LuaSTGEditorSharp
                 , new AddNode(AddBossAuraNode));
             boss.Add(new ToolboxItemData("bossui", "/LuaSTGNode.Legacy;component/images/bosssetui.png", "Set Boss UI")
                 , new AddNode(AddBossUINode));
+            boss.Add(new ToolboxItemData("bosssetfloat", "/LuaSTGNode.Legacy;component/images/bossetfloat.png", "Set Boss Float")
+                , new AddNode(AddBossSetFloatNode));
             boss.Add(new ToolboxItemData(true), null);
             boss.Add(new ToolboxItemData("defbossbg", "/LuaSTGNode.Legacy;component/images/bgdefine.png", "Define Boss Background")
                 , new AddNode(AddBossBGDefineNode));
@@ -371,8 +374,67 @@ namespace LuaSTGEditorSharp
                 , new AddNode(AddSetImageStateNode));
             graphics.Add(new ToolboxItemData("setanimationstate", "/LuaSTGNode.Legacy;component/images/setanimationstate.png", "Set Animation State")
                 , new AddNode(AddSetAnimationStateNode));
+            graphics.Add(new ToolboxItemData("settexturesamplerstate", "/LuaSTGNode.Legacy;component/images/settexturesamplerstate.png", "Set Texture Sampler State")
+                , new AddNode(AddSetTextureSamplerStateNode));
             #endregion
             ToolInfo.Add("Graphics", graphics);
+
+            var richtext = new Dictionary<ToolboxItemData, AddNode>();
+            #region lstg.RichText
+            richtext.Add(new ToolboxItemData("richtextcreate", "/LuaSTGNode.Legacy;component/images/richtextcreate.png", "Create RichText Instance")
+                , new AddNode(AddReichTextCreateNode));
+            richtext.Add(new ToolboxItemData("richtextref", "/LuaSTGNode.Legacy;component/images/richtextcreate.png", "Create RichText Reference")
+                            , new AddNode(AddReichTextRefNode));
+            richtext.Add(new ToolboxItemData("richtextupdate", "/LuaSTGNode.Legacy;component/images/richtextupdate.png", "Update RichText")
+                            , new AddNode(AddRichTextUpdateNode));
+            richtext.Add(new ToolboxItemData("richtextrender", "/LuaSTGNode.Legacy;component/images/richtextrender.png", "Render RichText")
+                            , new AddNode(AddRichTextRenderNode));
+            richtext.Add(new ToolboxItemData(true), null);
+            richtext.Add(new ToolboxItemData("richtextsettext", "/LuaSTGNode.Legacy;component/images/richtextsettext.png", "Set RichText text")
+                , new AddNode(AddRichTextSetTextNode));
+            richtext.Add(new ToolboxItemData("richtextsetfillcolor", "/LuaSTGNode.Legacy;component/images/richtextsetfillcolor.png", "Set RichText Fill Color")
+                , new AddNode(AddRichTextSetFillColorNode));
+            richtext.Add(new ToolboxItemData("richtextsetoutline", "/LuaSTGNode.Legacy;component/images/richtextsetoutline.png", "Set RichText Outline")
+                , new AddNode(AddRichTextSetOutlineNode));
+            richtext.Add(new ToolboxItemData("richtextsetshadow", "/LuaSTGNode.Legacy;component/images/richtextsetshadow.png", "Set RichText Shadow")
+                , new AddNode(AddRichTextSetShadowNode));
+            richtext.Add(new ToolboxItemData("richtextclearshadow", "/LuaSTGNode.Legacy;component/images/richtextclearshadow.png", "Clear RichText Shadow")
+                , new AddNode(AddRichTextClearShadowNode));
+            richtext.Add(new ToolboxItemData(true), null);
+            richtext.Add(new ToolboxItemData("richtextsetfontsize", "/LuaSTGNode.Legacy;component/images/richtextsetfontsize.png", "Set RichText Font Size")
+                , new AddNode(AddRichTextSetFontSizeNode));
+            richtext.Add(new ToolboxItemData("richtextsettextwrap", "/LuaSTGNode.Legacy;component/images/richtextsettextwrap.png", "Set RichText Text Wrap Width")
+                , new AddNode(AddRichTextSetTextWrapNode));
+            richtext.Add(new ToolboxItemData("richtextsetmaxwidth", "/LuaSTGNode.Legacy;component/images/richtextsetmaxwidth.png", "Set RichText Max Width")
+                , new AddNode(AddRichTextSetMaxWidthNode));
+            richtext.Add(new ToolboxItemData("richtextsetmaxheight", "/LuaSTGNode.Legacy;component/images/richtextsetmaxheight.png", "Set RichText Max Height")
+                , new AddNode(AddRichTextSetMaxHeightNode));
+            richtext.Add(new ToolboxItemData(true), null);
+            richtext.Add(new ToolboxItemData("richtextsethodalign", "/LuaSTGNode.Legacy;component/images/richtextsethodalign.png", "Set RichText Horizontal Alignment")
+                , new AddNode(AddRichTextSetHAlignNode));
+            richtext.Add(new ToolboxItemData("richtextsetvertalign", "/LuaSTGNode.Legacy;component/images/richtextsetvertalign.png", "Set RichText Vertical Alignment")
+                , new AddNode(AddRichTextSetVAlignNode));
+            richtext.Add(new ToolboxItemData("richtextsetalignment", "/LuaSTGNode.Legacy;component/images/richtextsetalignment.png", "Set RichText Alignment")
+                , new AddNode(AddRichTextSetAlignmentNode));
+            richtext.Add(new ToolboxItemData(true), null);
+            richtext.Add(new ToolboxItemData("richtextsetunitperpixel", "/LuaSTGNode.Legacy;component/images/richtextsetunitperpixel.png", "Set RichText Units Per Pixel")
+                , new AddNode(AddRichTextSetUnitPerPixelNode));
+            richtext.Add(new ToolboxItemData("richtextgetunitperpixel", "/LuaSTGNode.Legacy;component/images/richtextgetunitperpixel.png", "Get RichText Units Per Pixel")
+                , new AddNode(AddRichTextGetUnitPerPixelNode));
+            richtext.Add(new ToolboxItemData("richtextsetautoscale", "/LuaSTGNode.Legacy;component/images/richtextsetautoscale.png", "Set RichText Auto Scale")
+                , new AddNode(AddRichTextSetAutoScaleNode));
+            richtext.Add(new ToolboxItemData(true), null);
+            richtext.Add(new ToolboxItemData("richtexthasanimation", "/LuaSTGNode.Legacy;component/images/richtexthasanimation.png", "RichText Has Animation")
+                , new AddNode(AddRichTextHasAnimationNode));
+            richtext.Add(new ToolboxItemData("richtextmeasure", "/LuaSTGNode.Legacy;component/images/richtextmeasure.png", "Measure RichText")
+                , new AddNode(AddRichTextMeasureNode));
+            richtext.Add(new ToolboxItemData("richtextsetstate", "/LuaSTGNode.Legacy;component/images/richtextsetstate.png", "Set RichText Render State")
+                , new AddNode(AddRichTextSetStateNode));
+            richtext.Add(new ToolboxItemData("richtextdestroy", "/LuaSTGNode.Legacy;component/images/richtextdestroy.png", "Destroy RichText")
+                , new AddNode(AddRichTextDestroyNode));
+
+            #endregion
+            ToolInfo.Add("RichText", richtext);
 
             var audio = new Dictionary<ToolboxItemData, AddNode>();
             #region audio
@@ -913,6 +975,11 @@ namespace LuaSTGEditorSharp
             parent.Insert(new BossUI(parent.ActivatedWorkSpaceData));
         }
 
+        private void AddBossSetFloatNode()
+        {
+            parent.Insert(new BossSetFloat(parent.ActivatedWorkSpaceData));
+        }
+
         private void AddBossBGDefineNode()
         {
             parent.Insert(new BossBGDefine(parent.ActivatedWorkSpaceData));
@@ -1310,6 +1377,128 @@ namespace LuaSTGEditorSharp
         private void AddSetAnimationCenterNode()
         {
             parent.Insert(new SetAnimationCenter(parent.ActivatedWorkSpaceData));
+        }
+        private void AddSetTextureSamplerStateNode()
+        {
+            parent.Insert(new SetTextureSamplerState(parent.ActivatedWorkSpaceData));
+        }
+
+        #endregion
+        #region lstg.RichText
+
+        private void AddReichTextCreateNode()
+        {
+            parent.Insert(new ReichTextCreate(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddReichTextRefNode()
+        {
+            parent.Insert(new ReichTextRef(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetTextNode()
+        {
+            parent.Insert(new RichTextSetText(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetFillColorNode()
+        {
+            parent.Insert(new RichTextSetFillColor(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetOutlineNode()
+        {
+            parent.Insert(new RichTextSetOutline(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextClearShadowNode()
+        {
+            parent.Insert(new RichTextClearShadow(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetShadowNode()
+        {
+            parent.Insert(new RichTextSetShadow(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetFontSizeNode()
+        {
+            parent.Insert(new RichTextSetFontSize(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetTextWrapNode()
+        {
+            parent.Insert(new RichTextSetTextWrap(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetMaxWidthNode()
+        {
+            parent.Insert(new RichTextSetMaxWidth(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetMaxHeightNode()
+        {
+            parent.Insert(new RichTextSetMaxHeight(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetHAlignNode()
+        {
+            parent.Insert(new RichTextSetHAlign(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetVAlignNode()
+        {
+            parent.Insert(new RichTextSetVAlign(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetAlignmentNode()
+        {
+            parent.Insert(new RichTextSetAlignment(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetUnitPerPixelNode()
+        {
+            parent.Insert(new RichTextSetUnitPerPixel(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextGetUnitPerPixelNode()
+        {
+            parent.Insert(new RichTextGetUnitPerPixel(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetAutoScaleNode()
+        {
+            parent.Insert(new RichTextSetAutoScale(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextUpdateNode()
+        {
+            parent.Insert(new RichTextUpdate(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextHasAnimationNode()
+        {
+            parent.Insert(new RichTextHasAnimation(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextMeasureNode()
+        {
+            parent.Insert(new RichTextMeasure(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextRenderNode()
+        {
+            parent.Insert(new RichTextRender(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextSetStateNode()
+        {
+            parent.Insert(new RichTextSetState(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddRichTextDestroyNode()
+        {
+            parent.Insert(new RichTextDestroy(parent.ActivatedWorkSpaceData));
         }
 
         #endregion

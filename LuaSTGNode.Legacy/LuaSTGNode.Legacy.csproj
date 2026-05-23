@@ -68,6 +68,7 @@
     <Compile Include="CustomNodes\CustomNodeSyntaxError.cs" />
     <Compile Include="CustomNodes\CustomNodeRuntimeError.cs" />
     <Compile Include="EditorData\Document\Meta\ModelLoadMetaInfo.cs" />
+    <Compile Include="EditorData\Node\Boss\BossSetFloat.cs" />
     <Compile Include="EditorData\Node\CustomNodes\BaseCustomNode.cs" />
     <Compile Include="CustomNodes\CustomNodeLoader.cs" />
     <Compile Include="EditorData\Document\MetaData.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="EditorData\Node\Graphics\SetImageState.cs" />
     <Compile Include="EditorData\Node\Graphics\SetImageCenter.cs" />
     <Compile Include="EditorData\Node\Graphics\SetFontState.cs" />
+    <Compile Include="EditorData\Node\Graphics\SetTextureSamplerState.cs" />
     <Compile Include="EditorData\Node\ICallBackFunc.cs" />
     <Compile Include="EditorData\Message\ArgCountInfo.cs" />
     <Compile Include="EditorData\Message\CannotFindAncestorTypeOf.cs" />
@@ -295,6 +297,29 @@
     <Compile Include="EditorData\Node\Render\RenderText.cs" />
     <Compile Include="EditorData\Node\Render\RenderNode.cs" />
     <Compile Include="EditorData\Node\Render\SetViewMode.cs" />
+    <Compile Include="EditorData\Node\RichText\ReichTextRef.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextDestroy.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextGetUnitPerPixel.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextHasAnimation.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextMeasure.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextRender.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetAlignment.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetAutoScale.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetFontSize.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetHAlign.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetMaxHeight.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetMaxWidth.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetShadow.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetOutline.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetFillColor.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextClearShadow.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetState.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetText.cs" />
+    <Compile Include="EditorData\Node\RichText\ReichTextCreate.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetTextWrap.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetUnitPerPixel.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextSetVAlign.cs" />
+    <Compile Include="EditorData\Node\RichText\RichTextUpdate.cs" />
     <Compile Include="EditorData\Node\Stage\Hinter.cs" />
     <Compile Include="EditorData\Node\Stage\StageFinishReplay.cs" />
     <Compile Include="EditorData\Node\Stage\MaskFader.cs" />
@@ -1637,6 +1662,54 @@
     <Content Include="CustomNodes\Example.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="images\16x16\richtextclearshadow.png" />
+    <Resource Include="images\16x16\richtextdestroy.png" />
+    <Resource Include="images\16x16\richtextgetunitperpixel.png" />
+    <Resource Include="images\16x16\richtexthasanimation.png" />
+    <Resource Include="images\16x16\richtextmeasure.png" />
+    <Resource Include="images\16x16\richtextsetalignment.png" />
+    <Resource Include="images\16x16\richtextsetautoscale.png" />
+    <Resource Include="images\16x16\richtextsetfillcolor.png" />
+    <Resource Include="images\16x16\richtextsetfontsize.png" />
+    <Resource Include="images\16x16\richtextsethodalign.png" />
+    <Resource Include="images\16x16\richtextsetmaxheight.png" />
+    <Resource Include="images\16x16\richtextsetmaxwidth.png" />
+    <Resource Include="images\16x16\richtextsetoutline.png" />
+    <Resource Include="images\16x16\richtextsetshadow.png" />
+    <Resource Include="images\16x16\richtextsetstate.png" />
+    <Resource Include="images\16x16\richtextsettextwrap.png" />
+    <Resource Include="images\16x16\richtextsetunitperpixel.png" />
+    <Resource Include="images\16x16\richtextsetvertalign.png" />
+    <Resource Include="images\richtextclearshadow.png" />
+    <Resource Include="images\richtextdestroy.png" />
+    <Resource Include="images\richtextgetunitperpixel.png" />
+    <Resource Include="images\richtexthasanimation.png" />
+    <Resource Include="images\richtextmeasure.png" />
+    <Resource Include="images\richtextsetalignment.png" />
+    <Resource Include="images\richtextsetautoscale.png" />
+    <Resource Include="images\richtextsetfillcolor.png" />
+    <Resource Include="images\richtextsetfontsize.png" />
+    <Resource Include="images\richtextsethodalign.png" />
+    <Resource Include="images\richtextsetmaxheight.png" />
+    <Resource Include="images\richtextsetmaxwidth.png" />
+    <Resource Include="images\richtextsetoutline.png" />
+    <Resource Include="images\richtextsetshadow.png" />
+    <Resource Include="images\richtextsetstate.png" />
+    <Resource Include="images\richtextsettextwrap.png" />
+    <Resource Include="images\richtextsetunitperpixel.png" />
+    <Resource Include="images\richtextsetvertalign.png" />
+    <Resource Include="images\richtextsettext.png" />
+    <Resource Include="images\16x16\richtextsettext.png" />
+    <Resource Include="images\16x16\richtextrender.png" />
+    <Resource Include="images\16x16\richtextupdate.png" />
+    <Resource Include="images\richtextrender.png" />
+    <Resource Include="images\richtextupdate.png" />
+    <Resource Include="images\16x16\richtextcreate.png" />
+    <Resource Include="images\richtextcreate.png" />
+    <Resource Include="images\16x16\bossetfloat.png" />
+    <Resource Include="images\bossetfloat.png" />
+    <Resource Include="images\16x16\settexturesamplerstate.png" />
+    <Resource Include="images\settexturesamplerstate.png" />
     <Resource Include="images\else.png" />
     <Resource Include="images\16x16\renderanim.png" />
     <Resource Include="images\renderanim.png" />
@@ -2249,5 +2322,6 @@
     <Resource Include="images\16x16\particlefire.png" />
     <Resource Include="images\16x16\particlestop.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

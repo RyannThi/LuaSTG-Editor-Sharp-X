@@ -114,8 +114,8 @@ namespace LuaSTGEditorSharp.EditorData.Document
                                 newDoc.TreeNodes.Add(t);
                                 t.RaiseCreate(new OnCreateEventArgs() { parent = null });
                                 pdd = (newDoc as PlainDocumentData)?.GetVirtualDoc();
-                            }
-                            referencedDoc.Add(pdd);
+                                }
+                                if (pdd != null) referencedDoc.Add(pdd);
                         }
                         catch { }
                     }
@@ -214,18 +214,20 @@ namespace LuaSTGEditorSharp.EditorData.Document
                 else if (idwm is VirtualDoc vd)
                 {
                     string s = vd.DocPath;
-                    //try
+                    try
                     {
                         DocumentData newDoc = GetNewByExtension(Path.GetExtension(s), -1
                             , Path.GetFileNameWithoutExtension(s), s, true);
                         TreeNode t = newDoc.CreateNodeFromFile(s);
                         newDoc.TreeNodes.Add(t);
-                        (newDoc as PlainDocumentData).parentProj = this;
-                        newDoc.GatherCompileInfo(mainAppWithInfo);
-                        c.fileProcess.Add(newDoc.CompileProcess as PartialProjectProcess);
-                        //MessageBox.Show(newDoc.CompileProcess.GetType().ToString());
+                        if (newDoc is PlainDocumentData plainDoc)
+                        {
+                            plainDoc.parentProj = this;
+                            plainDoc.GatherCompileInfo(mainAppWithInfo);
+                            c.fileProcess.Add(plainDoc.CompileProcess as PartialProjectProcess);
+                        }
                     }
-                    //catch { }
+                    catch { }
                 }
             }
 

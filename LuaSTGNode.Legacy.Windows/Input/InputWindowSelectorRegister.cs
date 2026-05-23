@@ -147,6 +147,14 @@ namespace LuaSTGEditorSharp.Windows.Input
                 , new string[] { "ui", "world", "3d" });
             target.Add("viewpoint"
                 , new string[] { "\"eye\"", "\"at\"", "\"3D\"", "\"up\"", "\"z\"", "\"fovy\"", "\"fog\"" });
+            target.Add("samplerstate"
+                , new string[] { "\"point+wrap\"", "\"point+clamp\"", "\"linear+wrap\"", "\"linear+clamp\"" });
+            target.Add("richtexttype"
+                , new string[] { "path", "font", "system" });
+            target.Add("richtexthalign"
+                , new string[] { "\"left\"", "\"center\"", "\"right\"", "nil" });
+            target.Add("richtextvalign"
+                , new string[] { "\"top\"", "\"middle\"", "\"bottom\"", "nil" });
         }
 
         public void RegisterInputWindow(Dictionary<string, Func<AttrItem, string, IInputWindow>> target)
@@ -248,6 +256,12 @@ namespace LuaSTGEditorSharp.Windows.Input
             target.Add("rect", InputWindowSelector.nullWindow);
             target.Add("rectNonNegative", InputWindowSelector.nullWindow);
             target.Add("omega", InputWindowSelector.nullWindow);
+            target.Add("richtexttype", (src, tar) => new Selector(tar
+                , InputWindowSelector.SelectComboBox("richtexttype"), "Input RichText Create Type"));
+            target.Add("richtexthalign", (src, tar) => new Selector(tar
+                , InputWindowSelector.SelectComboBox("richtexthalign"), "Input Horizontal Alignment"));
+            target.Add("richtextvalign", (src, tar) => new Selector(tar
+                , InputWindowSelector.SelectComboBox("richtextvalign"), "Input Vertical Alignment"));
         }
     }
 }
