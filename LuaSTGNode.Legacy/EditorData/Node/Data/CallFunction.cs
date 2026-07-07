@@ -14,6 +14,7 @@ namespace LuaSTGEditorSharp.EditorData.Node.Data
 {
     [Serializable, NodeIcon("callfunc.png")]
     [CreateInvoke(0), RCInvoke(1)]
+    [LeafNode]
     public class CallFunction : TreeNode
     {
         [JsonConstructor]

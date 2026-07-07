@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "LuaSTG Editor Sharp X"
-#define MyAppVersion "0.78.2"
+#define MyAppVersion "0.78.3"
 #define MyAppPublisher "LuaSTG Editor Sharp X"
 #define MyAppURL "https://github.com/Sharp-X-Team/LuaSTG-Editor-Sharp-X"
 #define MyAppExeName "LuaSTGEditorSharp.exe"
@@ -21,17 +21,17 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={autopf}\LuaSTG Editor Sharp X v0.78.2
+DefaultDirName={autopf}\LuaSTG Editor Sharp X v0.78.3
 ChangesAssociations=yes
 DisableProgramGroupPage=yes
-LicenseFile=D:\GitHub\LuaSTG-Editor-Sharp-X\InnoFiles\license.txt
-InfoBeforeFile=D:\GitHub\LuaSTG-Editor-Sharp-X\InnoFiles\before.txt
-InfoAfterFile=D:\GitHub\LuaSTG-Editor-Sharp-X\InnoFiles\after.txt
+LicenseFile=D:\Programmation\LuaSTG-Editor-Sharp-X\InnoFiles\license.txt
+InfoBeforeFile=D:\Programmation\LuaSTG-Editor-Sharp-X\InnoFiles\before.txt
+InfoAfterFile=D:\Programmation\LuaSTG-Editor-Sharp-X\InnoFiles\after.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=C:\Users\Ryann\Desktop\SharpXInstall
-OutputBaseFilename=LuaSTG Editor Sharp X v0.78.2
-SetupIconFile=D:\GitHub\LuaSTG-Editor-Sharp-X\LuaSTGEditorSharp\Icon.ico
+OutputDir=C:\SharpXInstall
+OutputBaseFilename=LuaSTG Editor Sharp X v0.78.3
+SetupIconFile=D:\Programmation\LuaSTG-Editor-Sharp-X\LuaSTGEditorSharp\Icon.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -43,8 +43,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "D:\GitHub\LuaSTG-Editor-Sharp-X\bin\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\GitHub\LuaSTG-Editor-Sharp-X\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\Programmation\LuaSTG-Editor-Sharp-X\bin\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Programmation\LuaSTG-Editor-Sharp-X\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]

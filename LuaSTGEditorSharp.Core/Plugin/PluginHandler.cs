@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Serilog;
+using LuaSTGEditorSharp.Util;
 
 namespace LuaSTGEditorSharp.Plugin
 {
@@ -24,6 +25,7 @@ namespace LuaSTGEditorSharp.Plugin
             try
             {
                 string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PluginPath));
+                File.UnblockDll(path);
                 pluginAssembly = Assembly.LoadFile(path);
                 Plugin = (AbstractPluginEntry)pluginAssembly.CreateInstance("LuaSTGEditorSharp.PluginEntry");
                 

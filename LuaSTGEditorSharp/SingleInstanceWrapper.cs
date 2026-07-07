@@ -16,7 +16,7 @@ namespace LuaSTGEditorSharp
     {
         public SingleInstanceWrapper()
         {
-            IsSingleInstance = true;
+            IsSingleInstance = false;
         }
 
         public SingleInstanceWrapper(ReadOnlyCollection<string> s) : this()

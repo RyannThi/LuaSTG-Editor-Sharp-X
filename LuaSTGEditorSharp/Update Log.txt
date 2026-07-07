@@ -1,4 +1,12 @@
-﻿-- Update Log（May 23th, 2026）
+﻿-- Update Log（July 7th, 2026）
+
+v0.78.3
+- Added the "Create Simple Object" node. Acts like a simple enemy but as a normal object.
+- Plugin DLLs will now unlock themselves automatically. No more plugin errors!
+- Changed the "Call Function" node to be a leaf node.
+- Removed the single instance restriction.
+- Fixed the styling (color themes) of the "Add File" edit window.
+- Fixed RichText Render node position edit window.
 
 v0.78.2
 - Added the entire lstg.RichText node supports.

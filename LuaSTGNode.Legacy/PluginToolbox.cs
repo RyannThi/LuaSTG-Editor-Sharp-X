@@ -247,6 +247,8 @@ namespace LuaSTGEditorSharp
                 , new AddNode(AddDefineObjectNode));
             obj.Add(new ToolboxItemData("createobject", "/LuaSTGNode.Legacy;component/images/objectcreate.png", "Create Object")
                 , new AddNode(AddCreateObjectNode));
+            obj.Add(new ToolboxItemData("createsimpleobject", "/LuaSTGNode.Legacy;component/images/objectsimple.png", "Create Simple Object")
+                , new AddNode(AddCreateSimpleObjectNode));
             obj.Add(new ToolboxItemData(true), null);
             obj.Add(new ToolboxItemData("callbackfunc", "/LuaSTGNode.Legacy;component/images/callbackfunc.png", "Call Back Functions")
                 , new AddNode(AddCallBackFuncNode));
@@ -1103,6 +1105,11 @@ namespace LuaSTGEditorSharp
             TreeNode objdef = new ObjectDefine(parent.ActivatedWorkSpaceData);
             objdef.AddChild(new ObjectInit(parent.ActivatedWorkSpaceData));
             parent.Insert(objdef);
+        }
+
+        private void AddCreateSimpleObjectNode()
+        {
+            parent.Insert(new CreateSimpleObject(parent.ActivatedWorkSpaceData));
         }
 
         private void AddCreateObjectNode()

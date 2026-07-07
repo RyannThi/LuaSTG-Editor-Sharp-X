@@ -28,8 +28,8 @@ public class RichTextRender : TreeNode
     [JsonIgnore, NodeAttribute]
     public string Position
     {
-        get => DoubleCheckAttr(0).attrInput;
-        set => DoubleCheckAttr(0).attrInput = value;
+        get => DoubleCheckAttr(0, "position").attrInput;
+        set => DoubleCheckAttr(0, "position").attrInput = value;
     }
 
     [JsonIgnore, NodeAttribute]

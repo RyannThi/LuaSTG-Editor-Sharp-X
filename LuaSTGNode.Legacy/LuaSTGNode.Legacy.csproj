@@ -225,6 +225,7 @@
     <Compile Include="EditorData\Node\ObjectPoolTypeAlikeTypes.cs" />
     <Compile Include="EditorData\Node\Object\CreateItem.cs" />
     <Compile Include="EditorData\Node\Object\CreateObject.cs" />
+    <Compile Include="EditorData\Node\Object\CreateSimpleObject.cs" />
     <Compile Include="EditorData\Node\Object\DefineItem.cs" />
     <Compile Include="EditorData\Node\Object\DropItem.cs" />
     <Compile Include="EditorData\Node\Object\ItemInit.cs" />
@@ -1662,6 +1663,8 @@
     <Content Include="CustomNodes\Example.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="images\16x16\objectsimple.png" />
+    <Resource Include="images\objectsimple.png" />
     <Resource Include="images\16x16\richtextclearshadow.png" />
     <Resource Include="images\16x16\richtextdestroy.png" />
     <Resource Include="images\16x16\richtextgetunitperpixel.png" />
