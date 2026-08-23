@@ -29,7 +29,7 @@ The editor is designed to fit many variants of the LuaSTG engine. New versions c
 <div align="center">
   
 ex+ (ExPlus) | -x | aex+ (Sub) | Evo | Flux | Others
-:---: | :---: | :---: | :---: | :---:
+:---: | :---: | :---: | :---: | :---: | :---:
 :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | As long as THlib is present
 
 </div>
