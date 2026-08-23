@@ -20,6 +20,8 @@ using LuaSTGEditorSharp.EditorData;
 using LuaSTGEditorSharp.Windows;
 using LuaSTGEditorSharp.Addons;
 using System.Collections.Specialized;
+using LuaSTGEditorSharp.Execution;
+using Serilog;
 
 namespace LuaSTGEditorSharp
 {
@@ -40,11 +42,13 @@ namespace LuaSTGEditorSharp
         protected override void OnStartup(StartupEventArgs e)
         {
             EditorLogging.Initialize();
+            ILogger logger = EditorLogging.ForContext("App");
 
             // Don't ask. I don't know. It just works. Start of the fuckery.
             ResourceDictionary r1 = new ResourceDictionary();
             r1.Source = new Uri($"pack://application:,,,/LuaSTGEditorThemes;component/{CurrentTheme}.xaml");
             Resources.MergedDictionaries.Add(r1);
+            logger.Information("Loaded themes");
             // End of the fuckery.
 
             TextWriter tw = Console.Out;
@@ -62,6 +66,7 @@ namespace LuaSTGEditorSharp
                 if (!AddonManager.TryLoadAddons())
                 {
                     addonsLoadedCorrectly = false;
+                    logger.Error("Addons failed to load. This is NOT critical and expected to fail as of version 0.78.4 and higher, until notified otherwise in changelog.");
                 }
 
                 bool isPluginLoadedCorrectly = true;
@@ -69,12 +74,14 @@ namespace LuaSTGEditorSharp
                 if (!PluginHandler.LoadPlugin(PluginPath))
                 {
                     isPluginLoadedCorrectly = false;
+                    logger.Fatal("PluginHandler failed to load plugins.");
                 }
                 LuaSTGEditorSharp.Windows.InputWindowSelector.Register(PluginHandler.Plugin.GetInputWindowSelectorRegister());
                 LuaSTGEditorSharp.Windows.InputWindowSelector.AfterRegister();
                 RaisePropertyChanged("m");
 
                 Lua.SyntaxHighlightLoader.LoadLuaDef();
+                logger.Information("Syntax highlight loaded.");
 
                 var mainWindow = new MainWindow();
                 //string arg = AppDomain.CurrentDomain.SetupInformation.ActivationArguments?.ActivationData?[0];
@@ -85,6 +92,7 @@ namespace LuaSTGEditorSharp
                 }
                 if (!string.IsNullOrEmpty(arg))
                 {
+                    logger.Information($"Launched editor with file: {arg}");
                     Uri fileUri = new Uri(arg);
                     string fp = Uri.UnescapeDataString(fileUri.AbsolutePath);
                     //MessageBox.Show(fp);
@@ -93,16 +101,20 @@ namespace LuaSTGEditorSharp
                 }
 
                 MainWindow = mainWindow;
+                logger.Information("Show Main Window.");
                 MainWindow.Show();
 
                 // If the plugin wasn't loaded correctly, display the MessageBox after creating the main window.
                 // This way, it won't close instantly.
                 if (!isPluginLoadedCorrectly)
+                {
+                    logger.Fatal("A plugin/target LuaSTG version has not been set appropriately.");
                     MessageBox.Show("A plugin/target LuaSTG version has not been set approriately.\nPlease check your settings.");
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                logger.Fatal("An unhandled exception occurred during startup.", ex);
                 Current.Shutdown();
             }
         }

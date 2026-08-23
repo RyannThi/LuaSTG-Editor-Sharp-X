@@ -16,34 +16,25 @@ namespace LuaSTGEditorSharp.EditorData.Document
         public void SaveMeta()
         {
             string path = DocPath + ".lstgdef";
-            FileStream fs = null;
-            StreamWriter sw = null;
+            using FileStream fs = new(path, FileMode.Create);
+            using StreamWriter sw = new(fs);
             try
             {
-                fs = new FileStream(path, FileMode.Create);
-                sw = new StreamWriter(fs);
                 sw.Write(EditorSerializer.SerializeMetaData(UndecidedMeta));
             }
             catch (System.Exception e)
             {
                 System.Windows.MessageBox.Show(e.ToString());
             }
-            finally
-            {
-                if (sw != null) sw.Close();
-                if (fs != null) fs.Close();
-            }
         }
 
         public bool LoadMeta()
         {
-            FileStream fs = null;
-            StreamReader sr = null;
+            string path = DocPath + ".lstgdef";
+            using FileStream fs = new(path, FileMode.Open);
+            using StreamReader sr = new(fs);
             try
             {
-                string path = DocPath + ".lstgdef";
-                fs = new FileStream(path, FileMode.Open);
-                sr = new StreamReader(fs);
                 UndecidedMeta = (AbstractMetaData)EditorSerializer.DeserializeMetaData(sr.ReadToEnd());
                 UndecidedMeta.CheckIntegrity();
                 return true;
@@ -51,11 +42,6 @@ namespace LuaSTGEditorSharp.EditorData.Document
             catch
             {
                 return false;
-            }
-            finally
-            {
-                if (sr != null) sr.Close();
-                if (fs != null) fs.Close();
             }
         }
     }

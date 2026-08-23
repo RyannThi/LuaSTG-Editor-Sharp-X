@@ -84,6 +84,8 @@ namespace LuaSTGEditorSharp
                 , new AddNode(AddShakeScreenNode));
             stage.Add(new ToolboxItemData("maskfader", "/LuaSTGNode.Legacy;component/images/maskfader.png", "Mask Fader")
                 , new AddNode(AddMaskFaderNode));
+            stage.Add(new ToolboxItemData("shutter", "/LuaSTGNode.Legacy;component/images/shutter.png", "Shutter")
+                , new AddNode(AddShutterNode));
             stage.Add(new ToolboxItemData("hinter", "/LuaSTGNode.Legacy;component/images/hinter.png", "Hinter")
                 , new AddNode(AddHinterNode));
             #endregion
@@ -717,6 +719,11 @@ namespace LuaSTGEditorSharp
         private void AddMaskFaderNode()
         {
             parent.Insert(new MaskFader(parent.ActivatedWorkSpaceData));
+        }
+
+        private void AddShutterNode()
+        {
+            parent.Insert(new Shutter(parent.ActivatedWorkSpaceData));
         }
 
         private void AddHinterNode()

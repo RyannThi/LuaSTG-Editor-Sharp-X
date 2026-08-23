@@ -38,8 +38,6 @@ using Newtonsoft.Json;
 using Path = System.IO.Path;
 using System.Windows.Threading;
 using LuaSTGEditorSharp.Properties;
-using NetSparkleUpdater;
-using NetSparkleUpdater.SignatureVerifiers;
 using System.Runtime.CompilerServices;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
@@ -119,10 +117,6 @@ namespace LuaSTGEditorSharp
 
         private BackgroundWorker CompileWorker;
 
-        public SparkleUpdater Sparkle;
-
-        //public Notifier _Notifier;
-
         public DiscordRpcClient DiscordClient;
 
         public static ILogger Logger = EditorLogging.ForContext("MainWindow");
@@ -145,10 +139,7 @@ namespace LuaSTGEditorSharp
 
             SetupDiscordRpc();
             //SetupNotifier(); // Cause a memory leak. TODO: fix
-            StartSparkle();
             SetupAutoSave();
-
-            Sparkle.StartLoop((App.Current as App).CheckUpdateAtLaunch, (App.Current as App).CheckUpdateAtLaunch);
 
             Logger.Information("Main Window initialized.");
         }
@@ -185,23 +176,6 @@ namespace LuaSTGEditorSharp
             });
         }
 
-        private void StartSparkle()
-        {
-            Sparkle = new SparkleUpdater(
-                "https://raw.githubusercontent.com/RyannThi/LuaSTG-Editor-Sharp-X/main/AppCast.xaml",
-                new Ed25519Checker(NetSparkleUpdater.Enums.SecurityMode.Unsafe)
-            )
-            {
-                UIFactory = new NetSparkleUpdater.UI.WPF.UIFactory(Icon),
-                RelaunchAfterUpdate = true,
-                CustomInstallerArguments = "",
-                ShowsUIOnMainThread = true,
-                CheckServerFileName = false // Why was that not in the docs
-            };
-            Sparkle.PreparingToExit += SparkleCloseFiles;
-            Logger.Information("NetSparkle initialized.");
-        }
-
         private void SetupAutoSave()
         {
             if ((App.Current as App).UseAutoSave)
@@ -215,6 +189,7 @@ namespace LuaSTGEditorSharp
                     AutoSaveAndBackup();
                 };
                 autoSaveTimer.Start();
+                Logger.Information("Automatic saving enabled. Interval: " + (App.Current as App).AutoSaveTimer + " minutes.");
             }
         }
 
@@ -237,12 +212,6 @@ namespace LuaSTGEditorSharp
                 cfg.Dispatcher = Application.Current.Dispatcher;
             });
         }*/
-
-        private void SparkleCloseFiles(object sender, CancelEventArgs e)
-        {
-            foreach (DocumentData doc in Documents)
-                CloseFile(doc);
-        }
 
         #endregion
         #region Editor Execution
@@ -267,6 +236,7 @@ namespace LuaSTGEditorSharp
                 tabMessage.IsSelected = true;
                 MessageBox.Show("Errors are found in the editor. The project cannot be compiled if any error is present."
                     , "LuaSTG Editor Sharp X", MessageBoxButton.OK, MessageBoxImage.Error);
+                Logger.Error("Errors are found in the editor. The project cannot be compiled if any error is present.");
                 return true;
             }
             return false;
@@ -283,10 +253,11 @@ namespace LuaSTGEditorSharp
                 var w = new CodePreviewWindow(string.Concat(selectedNode.ToLua(0)));
                 w.ShowDialog();
                 //SaveXML();
+                Logger.Verbose("ViewCode invoked.");
             }
             catch (Exception e)
             {
-                Logger.Error($"Failed to compile code. Reason:\n{e}");
+                Logger.Error($"Failed to compile code.", e);
                 MessageBox.Show(e.ToString());
             }
         }
@@ -342,12 +313,14 @@ namespace LuaSTGEditorSharp
             TreeNode prev = selectedNode.GetNearestEdited();
             ActivatedWorkSpaceData.AddAndExecuteCommand(new DeleteCommand(selectedNode));
             //_Notifier.ShowInfo("Node cut!");
+            Logger.Verbose($"Node cut: {clipBoard}");
             if (prev != null) Reveal(prev);
         }
 
         private void CopyNode()
         {
             clipBoard = (TreeNode)selectedNode.Clone();
+            Logger.Verbose($"Node copied: {clipBoard}");
             //_Notifier.ShowInfo("Node copied!");
         }
 
@@ -358,6 +331,7 @@ namespace LuaSTGEditorSharp
                 TreeNode node = (TreeNode)clipBoard.Clone();
                 node.FixParentDoc(ActivatedWorkSpaceData);
                 Insert(node, false);
+                Logger.Verbose($"Node pasted: {clipBoard}");
                 //_Notifier.ShowInfo("Node pasted!");
             }
             catch { }
@@ -376,6 +350,7 @@ namespace LuaSTGEditorSharp
         private void DeleteNode()
         {
             TreeNode prev = selectedNode.GetNearestEdited();
+            Logger.Verbose($"Node deleted: {selectedNode}");
             ActivatedWorkSpaceData.AddAndExecuteCommand(new DeleteCommand(selectedNode));
             if (prev != null) Reveal(prev);
         }
@@ -413,6 +388,8 @@ namespace LuaSTGEditorSharp
                 sta.Pop().IsExpanded = true;
             }
             node.IsSelected = true;
+
+            Logger.Verbose($"Node revealed: {node}");
         }
 
         private void FoldRegion()
@@ -559,10 +536,11 @@ namespace LuaSTGEditorSharp
                 //newDoc.TreeNodes[0].FixBan();
                 newDoc.OriginalMeta.PropertyChanged += newDoc.OnEditing;
                 AddRecentlyOpened(path);
+                Logger.Information($"Opened doc: {newDoc.DocName}");
             }
             catch (JsonException e)
             {
-                Logger.Error($"Failed to open document. Reason:\n{e}");
+                Logger.Error($"Failed to open document.", e);
                 MessageBox.Show("Failed to open document. Please check whether the targeted file is in current version.\n"
                     + e.ToString()
                     , "LuaSTG Editor Sharp X", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -596,10 +574,11 @@ namespace LuaSTGEditorSharp
                 newDoc.OnOpening();
                 //newDoc.TreeNodes[0].FixBan();
                 newDoc.OriginalMeta.PropertyChanged += newDoc.OnEditing;
+                Logger.Information($"File cloned from path: {newDoc.DocName}");
             }
             catch (JsonException e)
             {
-                Logger.Error($"Failed to open document. Reason:\n{e}");
+                Logger.Error($"Failed to open document.", e);
                 MessageBox.Show("Failed to open document. Please check whether the targeted file is in current version.\n"
                     + e
                     , "LuaSTG Editor Sharp X", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -617,6 +596,7 @@ namespace LuaSTGEditorSharp
             bool success = doc.Save(App.Current as App);
             //if (success)
             //    _Notifier.ShowSuccess("Project saved!");
+            Logger.Information($"Saved file: {doc.DocName}");
             return success;
         }
 
@@ -650,7 +630,7 @@ namespace LuaSTGEditorSharp
                     // If the autosave/backup failed, skip it and try for the next loaded project.
                     // Should only happen if FileInfo failed to initialize (most likely because of a file access violation)
 
-                    Logger.Error($"Auto save failed. Reason:\n{ex}");
+                    Logger.Error($"Auto save failed.", ex);
                     continue;
                 }
             }
@@ -849,7 +829,7 @@ namespace LuaSTGEditorSharp
             SelectedNode = ((TreeNode)(workSpace.SelectedItem));
             if (selectedNode != null) this.propData.ItemsSource = selectedNode.attributes;
             // I really don't want this to crash. So fuck it: try/catch.
-            string version = "LuaSTG Editor Sharp X v0.78.0";
+            string version = "LuaSTG Editor Sharp X v0.78.4";
             if (ActivatedWorkSpaceData != null)
             {
                 Title = $"{version} - {ActivatedWorkSpaceData.RawDocName}";
@@ -882,6 +862,16 @@ namespace LuaSTGEditorSharp
                 ComboBoxItem item = new() { Content = s };
                 comboBox.Items.Add(item);
             }
+
+            //Bug fix, referenced from https://github.com/czh098tom/LuaSTG-Editor-Sharp/commit/775506463216676b57b53b0604b91d633247c71a
+            comboBox.ApplyTemplate();
+            if (comboBox.Template.FindName("PART_EditableTextBox", comboBox) is TextBox tb)
+            {
+                tb.AcceptsReturn = true;
+                tb.TextWrapping = TextWrapping.Wrap;
+                tb.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            }
+
             comboBox.Focus();
         }
 
@@ -896,11 +886,6 @@ namespace LuaSTGEditorSharp
                 };
                 log.Start();
             }
-        }
-
-        protected void CheckForUpdates_Click(object sender, RoutedEventArgs e)
-        {
-            Sparkle.CheckForUpdatesAtUserRequest();
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)

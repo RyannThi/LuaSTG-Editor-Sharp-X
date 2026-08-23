@@ -10,7 +10,7 @@
         xmlns:om="clr-namespace:System.Collections.Generic;assembly=mscorlib"
         xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
         mc:Ignorable="d"
-        Title="LuaSTG Editor Sharp X v0.78.3"
+        Title="LuaSTG Editor Sharp X v0.78.4"
         Height="679.6"
         Width="800"
         WindowState="Maximized"
@@ -560,7 +560,6 @@
                 <MenuItem Header="_Help">
                     <MenuItem Header="_Nodes" Command="local:EditorRoutedCommands.AboutNode"/>
                     <MenuItem Header="_Update Log" Click="UpdateLog_Click"/>
-                    <MenuItem Header="_Check for Updates" Click="CheckForUpdates_Click"/>
                 </MenuItem>
             </Menu>
         </Border>

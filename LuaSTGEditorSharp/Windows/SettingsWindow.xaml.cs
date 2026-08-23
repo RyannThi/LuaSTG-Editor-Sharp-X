@@ -759,18 +759,6 @@ namespace LuaSTGEditorSharp.Windows
             {
                 if (!names.Contains(s)) names.Add(s);
             }
-
-            //new List<string>(pathIgnorance).ForEach((s)=>System.Windows.MessageBox.Show(s));
-            //System.Windows.MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory);
-
-            pluginPaths = [.. from string s
-                in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "\\lib")
-                where Path.GetExtension(s) == ".dll" && names.Contains(Path.GetFileNameWithoutExtension(s))
-                select Path.GetFileName(s)
-            ];
-            //PluginList.ItemsSource = pluginPaths;
-
-            //ToolboxSelector.SelectedItem = SelectedToolbox;
         }
 
         public SettingsWindow(int i) : this()

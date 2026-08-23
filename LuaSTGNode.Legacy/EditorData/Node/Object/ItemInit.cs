@@ -77,7 +77,7 @@ namespace LuaSTGEditorSharp.EditorData.Node.Object
                         + sp + s1 + "self.imgup = " + Macrolize(2) + "\n"
                         + sp + s1 + "self.servants = {}\n"
                         + sp + s1 + "self.attract = 0\n"
-                        + sp + s1 + "self._blend, self._a, self._r, self._g, self._b= '', 255, 255, 255, 255\n";
+                        + sp + s1 + "self._blend, self._a, self._r, self._g, self._b = '', 255, 255, 255, 255\n";
             foreach (var a in base.ToLua(spacing + 1))
             {
                 yield return a;

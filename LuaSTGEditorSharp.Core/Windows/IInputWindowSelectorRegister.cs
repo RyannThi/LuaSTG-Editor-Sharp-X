@@ -14,5 +14,10 @@ namespace LuaSTGEditorSharp.Windows
         void RegisterComboBoxText(Dictionary<string, string[]> target);
         //InputWindow SelectInputWindow(AttrItem source, string name, string toEdit, MainWindow owner);
         void RegisterInputWindow(Dictionary<string, Func<AttrItem, string, IInputWindow>> target);
+
+        /// <summary>
+        /// Overrides the default registrations with a json file and runtime-loaded images.
+        /// </summary>
+        void RegisterOverrides(Dictionary<string, string[]> overrides);
     }
 }

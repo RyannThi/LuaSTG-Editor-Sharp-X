@@ -263,5 +263,9 @@ namespace LuaSTGEditorSharp.Windows.Input
             target.Add("richtextvalign", (src, tar) => new Selector(tar
                 , InputWindowSelector.SelectComboBox("richtextvalign"), "Input Vertical Alignment"));
         }
+
+        public void RegisterOverrides(Dictionary<string, string[]> overrides)
+        {
+        }
     }
 }

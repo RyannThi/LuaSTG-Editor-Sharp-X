@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,7 +12,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace LuaSTGEditorSharp.Windows.Input
 {
@@ -23,6 +24,30 @@ namespace LuaSTGEditorSharp.Windows.Input
         {
             InitializeComponent();
             Result = s;
+
+            /*
+            if (TryGetOverrides("BulletInput.json", out var overrides))
+            {
+                BulletPanel.Children.Clear();
+
+                foreach (var bulletDef in overrides)
+                {
+                    BitmapImage bmp = new(new Uri(Path.Combine(Environment.CurrentDirectory, "images_override", "bullets", bulletDef.ImagePath ?? bulletDef.Tag)));
+
+                    Image content = new()
+                    {
+                        Style = (Style)FindResource("SelectionImg"),
+                        Source = bmp
+                    };
+
+                    Button b = new()
+                    {
+                        Content = content,
+                        Tag = bulletDef.Tag
+                    };
+                    b.Click += Style_Click;
+                }
+            }*/
         }
 
         private void Style_Click(object sender, RoutedEventArgs e)

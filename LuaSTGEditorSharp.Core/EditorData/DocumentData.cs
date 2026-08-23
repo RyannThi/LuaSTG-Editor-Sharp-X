@@ -480,7 +480,7 @@ namespace LuaSTGEditorSharp.EditorData
             }
             catch (System.Exception e)
             {
-                Logger.Error($"Couldn't save code. Reason:\n{e}");
+                Logger.Error($"Couldn't save code.", e);
                 System.Windows.MessageBox.Show(e.ToString());
             }
         }

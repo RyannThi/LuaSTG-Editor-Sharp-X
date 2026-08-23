@@ -322,6 +322,7 @@
     <Compile Include="EditorData\Node\RichText\RichTextSetVAlign.cs" />
     <Compile Include="EditorData\Node\RichText\RichTextUpdate.cs" />
     <Compile Include="EditorData\Node\Stage\Hinter.cs" />
+    <Compile Include="EditorData\Node\Stage\Shutter.cs" />
     <Compile Include="EditorData\Node\Stage\StageFinishReplay.cs" />
     <Compile Include="EditorData\Node\Stage\MaskFader.cs" />
     <Compile Include="EditorData\Node\Stage\ShakeScreen.cs" />
@@ -1663,6 +1664,8 @@
     <Content Include="CustomNodes\Example.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="images\16x16\shutter.png" />
+    <Resource Include="images\shutter.png" />
     <Resource Include="images\16x16\objectsimple.png" />
     <Resource Include="images\objectsimple.png" />
     <Resource Include="images\16x16\richtextclearshadow.png" />

@@ -14,11 +14,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Diagnostics;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace LuaSTGEditorSharp.Windows.Input
 {
+    public struct InputWindowOverride
+    {
+        public string Tag; //The Tag in xaml, same as the actual class name of the object itself.
+        public string? ImagePath; //Optional path override if the image isn't named the same way as the Tag.
+    }
+
     public class InputWindow : Window, IInputWindow, INotifyPropertyChanged
     {
         protected static List<string> Separate(string s)
@@ -93,6 +100,21 @@ namespace LuaSTGEditorSharp.Windows.Input
         public void AppendTitle(string s)
         {
             Title = s + " - " + Title;
+        }
+
+        public bool TryGetOverrides(string jsonName, out InputWindowOverride[]? overrides)
+        {
+            string jsonPath = Path.Combine(Directory.GetCurrentDirectory(), Path.ChangeExtension(jsonName, ".json"));
+
+            if (File.Exists(jsonPath))
+            {
+                string json = File.ReadAllText(jsonPath);
+                overrides = JsonConvert.DeserializeObject<InputWindowOverride[]>(json);
+                return true;
+            }
+
+            overrides = null;
+            return false;
         }
     }
 }

@@ -115,9 +115,6 @@
     <Reference Include="NetSparkle, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NetSparkleUpdater.SparkleUpdater.3.1.0\lib\net462\NetSparkle.dll</HintPath>
     </Reference>
-    <Reference Include="NetSparkle.UI.WPF, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetSparkleUpdater.UI.WPF.3.1.0\lib\net462\NetSparkle.UI.WPF.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -303,6 +300,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Addons\AddonsConfig.ini" />
+    <None Include="Changelogs\0.78.4_changelog.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Changelogs\0.78.3_changelog.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

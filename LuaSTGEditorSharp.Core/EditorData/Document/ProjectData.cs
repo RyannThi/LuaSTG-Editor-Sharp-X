@@ -75,53 +75,47 @@ namespace LuaSTGEditorSharp.EditorData.Document
 
         public override void OnOpening()
         {
-            foreach(MetaInfo mi in OriginalMeta.ProjFileData)
+            foreach (MetaInfo mi in OriginalMeta.ProjFileData)
             {
                 string s = null;
                 bool? undcPath = RelativePathConverter.IsRelativePath(mi.FullName);
+
                 if (undcPath == true)
-                {
                     s = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(DocPath), mi.FullName));
-                }
-                else if(undcPath == false)
-                {
+                else if (undcPath == false)
                     s = Path.GetFullPath(mi.FullName);
-                }
-                if (undcPath != null)
+
+                if (undcPath == null)
+                    continue;
+
+                PlainDocumentData openDoc = FindOpenDocument(s);
+
+                if (openDoc != null)
                 {
-                    bool find = false;
-                    foreach (DocumentData doc in parent)
-                    {
-                        if (s == doc.DocPath && doc is PlainDocumentData plainDocument)
-                        {
-                            find = true;
-                            referencedDoc.Add(plainDocument);
-                            plainDocument.parentProj = this;
-                            plainDocument.OriginalMeta.RaisePropertyChanged("n");
-                            break;
-                        }
-                    }
-                    if (!find)
-                    {
-                        try
-                        {
-                            VirtualDoc pdd = new VirtualDoc { DocPath = s };
-                            if (!pdd.LoadMeta())
-                            {
-                                DocumentData newDoc = GetNewByExtension(Path.GetExtension(s), -1
-                                    , Path.GetFileNameWithoutExtension(s), s);
-                                TreeNode t = newDoc.CreateNodeFromFile(s);
-                                newDoc.TreeNodes.Add(t);
-                                t.RaiseCreate(new OnCreateEventArgs() { parent = null });
-                                pdd = (newDoc as PlainDocumentData)?.GetVirtualDoc();
-                                }
-                                if (pdd != null) referencedDoc.Add(pdd);
-                        }
-                        catch { }
-                    }
+                    referencedDoc.Add(openDoc);
+                    openDoc.parentProj = this;
+                    openDoc.OriginalMeta.RaisePropertyChanged("n");
+                    continue;
                 }
+
+                try
+                {
+                    VirtualDoc pdd = new() { DocPath = s };
+
+                    if (!pdd.LoadMeta())
+                    {
+                        DocumentData newDoc = GetNewByExtension(Path.GetExtension(s), -1, Path.GetFileNameWithoutExtension(s), s);
+                        TreeNode t = newDoc.CreateNodeFromFile(s);
+                        newDoc.TreeNodes.Add(t);
+                        t.RaiseCreate(new OnCreateEventArgs() { parent = null });
+                        pdd = (newDoc as PlainDocumentData)?.GetVirtualDoc();
+                    }
+
+                    if (pdd != null)
+                        referencedDoc.Add(pdd);
+                }
+                catch { }
             }
-            foreach(MetaInfo mi in OriginalMeta.ProjFileData) {  }
         }
 
         public override void OnEditing(object sender, PropertyChangedEventArgs args)
@@ -213,24 +207,51 @@ namespace LuaSTGEditorSharp.EditorData.Document
                 }
                 else if (idwm is VirtualDoc vd)
                 {
+                    PlainDocumentData openDoc = FindOpenDocument(vd.DocPath);
+
+                    if (openDoc != null)
+                    {
+                        openDoc.parentProj = this;
+                        openDoc.GatherCompileInfo(mainAppWithInfo);
+
+                        if (openDoc.CompileProcess is PartialProjectProcess openProcess)
+                            c.fileProcess.Add(openProcess);
+
+                        continue;
+                    }
+
                     string s = vd.DocPath;
+
                     try
                     {
                         DocumentData newDoc = GetNewByExtension(Path.GetExtension(s), -1
                             , Path.GetFileNameWithoutExtension(s), s, true);
                         TreeNode t = newDoc.CreateNodeFromFile(s);
                         newDoc.TreeNodes.Add(t);
+
                         if (newDoc is PlainDocumentData plainDoc)
                         {
                             plainDoc.parentProj = this;
                             plainDoc.GatherCompileInfo(mainAppWithInfo);
-                            c.fileProcess.Add(plainDoc.CompileProcess as PartialProjectProcess);
+
+                            if (plainDoc.CompileProcess is PartialProjectProcess process)
+                                c.fileProcess.Add(process);
                         }
                     }
                     catch { }
                 }
             }
+        }
 
+        private PlainDocumentData FindOpenDocument(string path)
+        {
+            foreach (DocumentData doc in parent)
+            {
+                if (path == doc.DocPath && doc is PlainDocumentData plainDocument)
+                    return plainDocument;
+            }
+
+            return null;
         }
     }
 }

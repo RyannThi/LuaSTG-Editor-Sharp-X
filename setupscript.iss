@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "LuaSTG Editor Sharp X"
-#define MyAppVersion "0.78.3"
+#define MyAppVersion "0.78.4"
 #define MyAppPublisher "LuaSTG Editor Sharp X"
 #define MyAppURL "https://github.com/Sharp-X-Team/LuaSTG-Editor-Sharp-X"
 #define MyAppExeName "LuaSTGEditorSharp.exe"
@@ -21,7 +21,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={autopf}\LuaSTG Editor Sharp X v0.78.3
+DefaultDirName={autopf}\LuaSTG Editor Sharp X v0.78.4
 ChangesAssociations=yes
 DisableProgramGroupPage=yes
 LicenseFile=D:\Programmation\LuaSTG-Editor-Sharp-X\InnoFiles\license.txt
@@ -30,7 +30,7 @@ InfoAfterFile=D:\Programmation\LuaSTG-Editor-Sharp-X\InnoFiles\after.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputDir=C:\SharpXInstall
-OutputBaseFilename=LuaSTG Editor Sharp X v0.78.3
+OutputBaseFilename=LuaSTG Editor Sharp X v0.78.4
 SetupIconFile=D:\Programmation\LuaSTG-Editor-Sharp-X\LuaSTGEditorSharp\Icon.ico
 Compression=lzma
 SolidCompression=yes

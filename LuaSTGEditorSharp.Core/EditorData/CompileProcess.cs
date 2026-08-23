@@ -149,7 +149,7 @@ namespace LuaSTGEditorSharp.EditorData
             }
             catch (System.Exception e)
             {
-                Logger.Error($"Couldn't get MD5 hash. Reason:\n{e}");
+                Logger.Error($"Couldn't get MD5 hash.", e);
                 MessageBox.Show(e.ToString());
                 return "";
             }
@@ -196,23 +196,17 @@ namespace LuaSTGEditorSharp.EditorData
         /// </summary>
         protected void WriteRoot()
         {
-            FileStream s = null;
-            StreamWriter sw = null;
+            using FileStream s = new(rootLuaPath, FileMode.Create, FileAccess.Write);
+            using StreamWriter sw = new(s, Encoding.UTF8);
             try
             {
-                s = new FileStream(rootLuaPath, FileMode.Create, FileAccess.Write);
-                sw = new StreamWriter(s, Encoding.UTF8);
                 sw.Write(rootCode);
+                Logger.Information("Root file written.");
             }
             catch (System.Exception ex)
             {
-                Logger.Error($"Failed to write root file. Reason:\n{ex}");
+                Logger.Error($"Failed to write root file.", ex);
                 MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                sw?.Close();
-                s?.Close();
             }
         }
 
@@ -284,7 +278,7 @@ namespace LuaSTGEditorSharp.EditorData
             }
             catch (System.Exception e)
             {
-                Logger.Error($"Failed to gather RES META. Reason:\n{e}");
+                Logger.Error($"Failed to gather RES META.", e);
                 MessageBox.Show(e.ToString());
             }
             finally
@@ -336,7 +330,7 @@ namespace LuaSTGEditorSharp.EditorData
             }
             catch (System.Exception e)
             {
-                Logger.Error($"Failed to gather and save RES META. Reason:\n{e}");
+                Logger.Error($"Failed to gather and save RES META.", e);
                 MessageBox.Show(e.ToString());
             }
             finally

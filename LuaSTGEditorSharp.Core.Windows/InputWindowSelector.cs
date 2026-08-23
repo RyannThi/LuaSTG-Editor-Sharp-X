@@ -17,11 +17,13 @@ namespace LuaSTGEditorSharp.Windows
 
         private static readonly Dictionary<string, string[]> comboBox = [];
         private static readonly Dictionary<string, Func<AttrItem, string, IInputWindow>> windowGenerator = [];
+        private static readonly Dictionary<string, string[]> overrides = [];
 
         public static void Register(IInputWindowSelectorRegister register)
         {
             register.RegisterComboBoxText(comboBox);
             register.RegisterInputWindow(windowGenerator);
+            register.RegisterOverrides(overrides);
         }
 
         public static void AfterRegister()

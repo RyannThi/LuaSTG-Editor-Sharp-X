@@ -28,5 +28,9 @@ namespace LuaSTGEditorSharp.Plugin.Default
             target.Add("userDefinedNode", (source, toEdit) => new NodeDefInput(toEdit, source));
             target.Add("plainFile", (src, tar) => new PathInput(tar, "File (*.*)|*.*", src));
         }
+
+        public void RegisterOverrides(Dictionary<string, string[]> overrides)
+        {
+        }
     }
 }

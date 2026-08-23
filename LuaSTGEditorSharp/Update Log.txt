@@ -1,4 +1,16 @@
-﻿-- Update Log（July 7th, 2026）
+﻿-- Update Log（August 23th, 2026）
+
+v0.78.4
+- Added node "Create Shutter" node. Similar to Mask Fader.
+- Introducted new debug and information messages in the logging system. (Helps with debugging)
+- Updated internal libraries to latest versions.
+- Removed the need for the editor to load every single dll of other libraries when you open the settings.
+- Removed the "Check for Updates" button, as automatic updates are disabled until further notice.
+- Disabled automatic updates due to them not working.
+- Fixed a bug where the editor would crash if you run the game with a .lstges opened before running the .lstgproj first.
+- Fixed a crash when using IME on selected texts in multiline combox in datagrids.
+- Fixed BulletInput, ColorInput and EnemyInput editor windows having weird displaying issues.
+- Removed Herobrine.
 
 v0.78.3
 - Added the "Create Simple Object" node. Acts like a simple enemy but as a normal object.
